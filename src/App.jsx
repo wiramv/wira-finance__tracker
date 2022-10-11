@@ -1,70 +1,57 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Footer from "./Footer";
 import Header from "./Header";
-import InputData from "./InputData";
-import ShowNama from "./ShowNama";
-import LoadingLine from "./LoadingLine";
-import { useState } from "react";
-import axios from "axios";
+import Main from "./Main";
+import InpBudget from "./SetBudget";
+import Spending from "./Spending";
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [names, setNames] = useState([]);
-  const [lahir, setLahir] = useState("");
-  const [gender, setGender] = useState("");
+  const [budget, setBudget] = useState(0);
+  const [defBgt, setDefBgt] = useState(0);
+  const [earning, setEarning] = useState(0);
+  const [spending, setSpending] = useState(0);
+  const [cash, setCash] = useState(5000000);
+  const [log, setLog] = useState([]);
+  const [waktu, setWaktu] = useState('')
 
-  //   get names
-  const getNames = async () => {
-    setIsLoading(true);
-
-    let nameArr = [];
-    if (gender !== "other") {
-      for (let i = 0; i < 5; i++) {
-        let res = "";
-        while (res.gender != gender) {
-          let x = await axios.get("https://randomuser.me/api/");
-          res = x.data.results[0];
-        }
-        nameArr.push(res);
-      }
-    } else {
-      for (let i = 0; i < 5; i++) {
-        let res = "";
-        let x = await axios.get("https://randomuser.me/api/");
-        res = x.data.results[0];
-        nameArr.push(res);
-      }
-    }
-    setIsLoading(false);
-    setNames(nameArr);
-  };
-
-  const anotherNames = () => {
-    setNames([]);
-    getNames();
-  };
-
-  const dataReset = () => {
-    setNames([]);
-    setLahir("");
-    setGender("");
-  };
+  const [inpt, setInpt] = useState("");
+    useEffect(()=>{
+        const date = new Date()
+        const tanggal = date.getDate()
+        const bulan = date.getMonth()
+        const tahun = date.getFullYear()
+        setWaktu(tanggal+" "+bulan+" "+tahun)
+    },[])
 
   return (
-    <div className="app">
-      <Header />
-      {names.length === 0 && (
-        <InputData
-          setLahir={setLahir}
-          setGender={setGender}
-          lahir={lahir}
-          gender={gender}
-          getNames={getNames}
-        />
-      )}
-      {isLoading && <LoadingLine />}
-      {names.length > 0 && (
-        <ShowNama names={names} getNames={getNames} dataReset={dataReset} />
-      )}
-    </div>
+    <Router>
+      <Header
+        budget={budget}
+        earning={earning}
+        spending={spending}
+        cash={cash}
+      />
+      <Routes>
+        {defBgt === 0 ? (
+          <Route
+            path="/"
+            element={
+              <InpBudget
+                setDefBgt={setDefBgt}
+                setBudget={setBudget}
+                inpt={inpt}
+                setInpt={setInpt}
+              />
+            }
+          />
+        ) : (
+          <Route path="/" element={<Main />} />
+        )}
+        <Route path="/spending" element={<Spending setBudget={setBudget} budget={budget} setSpendng={setSpending} spending={spending} setCash={setCash} cash={cash} setLog={setLog} log={log} waktu={waktu} />}/>
+      </Routes>
+      <Footer />
+    </Router>
   );
 };
 
