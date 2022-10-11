@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/wira-finance__generator/static/css/main.d288e1c0.css",
+    "main.js": "/wira-finance__generator/static/js/main.b5827496.js",
+    "static/js/787.32b2f1d1.chunk.js": "/wira-finance__generator/static/js/787.32b2f1d1.chunk.js",
+    "index.html": "/wira-finance__generator/index.html",
+    "main.d288e1c0.css.map": "/wira-finance__generator/static/css/main.d288e1c0.css.map",
+    "main.b5827496.js.map": "/wira-finance__generator/static/js/main.b5827496.js.map",
+    "787.32b2f1d1.chunk.js.map": "/wira-finance__generator/static/js/787.32b2f1d1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d288e1c0.css",
+    "static/js/main.b5827496.js"
+  ]
+}
